@@ -62,21 +62,21 @@
 	/**
 	 * Updates the view.
 	 */
-	AutoHeight.prototype.update = function() {
-		var start = this._core._current,
-			end = start + this._core.settings.items,
-			visible = this._core.$stage.children().toArray().slice(start, end);
-			heights = [],
-			maxheight = 0;
-
-		$.each(visible, function(index, item) {
-			heights.push($(item).height());
-		});
-
-		maxheight = Math.max.apply(null, heights);
+	AutoHeight.prototype.update = function() {            
+                var max_height = 0, elem;
+                for(i=0; i <= (this._core.settings.items - 1); i++){
+                    elem = $(this._core.$stage.children().eq(this._core.current() + i));
+                    if(i === 0) {
+                            max_height = elem.height();
+                    }else {         
+                            if(elem.height() > max_height) {
+                                    max_height = elem.height();
+                            }
+                    }
+                }
 
 		this._core.$stage.parent()
-			.height(maxheight)
+			.height(max_height)
 			.addClass(this._core.settings.autoHeightClass);
 	};
 
